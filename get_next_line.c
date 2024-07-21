@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/16 16:34:54 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/22 00:07:47 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ char	*read_txt_file(int fd, char *current)
 		current = ft_calloc(1, 1);
 	read_bytes = 1;
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (buffer == NULL)
+	if (buffer == NULL || current == NULL)
 		return (NULL);
-	while (read_bytes > 0)
+	while (read_bytes > 0 && ft_strchr (current, '\n') == NULL)
 	{
 		read_bytes = read (fd, buffer, BUFFER_SIZE);
-		if (read_bytes < 0)
+		if (read_bytes <= 0 && ft_strlen(buffer) == 0 && current[0] == 0)
 		{
 			free (buffer);
+			free (current);
+			// printf ("test3\n");
 			return (NULL);
 		}
 		buffer[read_bytes] = '\0';
 		current = free_and_strjoin(current, buffer);
-		if (ft_strchr(current, '\n') != NULL)
-			break ;
 	}
 	free (buffer);
 	return (current);
@@ -63,13 +63,18 @@ char	*get_line(char *current)
 		i1++;
 	line = ft_calloc(i1 + 1, sizeof(char));
 	if (line == NULL)
+	{
+		// printf ("test7: %s\n", line);
 		return (NULL);
-	while (i2 <= i1)
+	}
+	while (i2 <= i1 - 1)
 	{
 		line[i2] = current[i2];
+		// printf ("test6: %s\n", line);
 		i2++;
 	}
 	line[i2] = '\0';
+	// printf ("test5: %s\n", line);
 	return (line);
 }
 
@@ -104,11 +109,38 @@ char	*get_next_line(int fd)
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		// printf ("test4\n");
 		return (NULL);
+	}
 	current = read_txt_file(fd, current);
 	if (current == NULL)
+	{
+		// printf ("test2\n");
 		return (NULL);
+	}
 	line = get_line(current);
 	current = del_previous_line(current);
 	return (line);
 }
+
+
+// int	main()
+// {
+// 	int	fd;
+// 	char	*str;
+// 	fd = open ("text", O_RDONLY);
+
+// 	str = "x";
+// 	while (str != NULL)
+// 	{
+// 		str = get_next_line(fd);
+// 		if (str != NULL)
+// 			printf ("%s", str);
+// 		free (str);
+// 	}
+// 	//printf ("\n");
+// 	close (fd);
+// 	return (1);
+
+// }
