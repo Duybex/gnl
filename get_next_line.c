@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/22 14:16:08 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/22 15:19:12 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,32 @@ char	*free_and_strjoin(char *current, char *buffer)
 
 char	*read_txt_file(int fd, char *current)
 {
-	int		read_bytes;
-	char	*buffer;
+	int		bytes;
+	char	*buff;
 
-	if (!current)
+	if (current == NULL)
 		current = ft_calloc(1, 1);
-	read_bytes = 1;
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (buffer == NULL || current == NULL)
+	bytes = 1;
+	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (buff == NULL || current == NULL)
 		return (NULL);
-	while (read_bytes > 0 && ft_strchr (current, '\n') == NULL)
+	while (bytes > 0 && ft_strchr (current, '\n') == NULL)
 	{
-		read_bytes = read (fd, buffer, BUFFER_SIZE);
-		if (read_bytes <= 0 && ft_strlen(buffer) == 0 && current[0] == 0)
+		bytes = read (fd, buff, BUFFER_SIZE);
+		if (bytes < 0 || (!bytes && ft_strlen(buff) == 0 && !current[0]))
 		{
-			free (buffer);
+			free (buff);
 			free (current);
 			return (NULL);
 		}
-		buffer[read_bytes] = '\0';
-		current = free_and_strjoin(current, buffer);
+		buff[bytes] = '\0';
+		current = free_and_strjoin(current, buff);
 	}
-	free (buffer);
+	free (buff);
 	return (current);
 }
 
-char	*get_line(char *current)
+char	*get_one_line(char *current)
 {
 	int		i1;
 	int		i2;
@@ -104,16 +104,10 @@ char	*get_next_line(int fd)
 	static char		*current;
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		return (NULL);
-	}
 	current = read_txt_file(fd, current);
 	if (current == NULL)
-	{
 		return (NULL);
-	}
-	line = get_line(current);
+	line = get_one_line(current);
 	current = del_previous_line(current);
 	return (line);
 }
