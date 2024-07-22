@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:55:40 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/17 16:24:09 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/22 14:15:33 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,6 @@ char	*ft_strchr(const char *str, int c)
 	if (find == '\0' && *str == '\0')
 		return ((char *)str);
 	return (NULL);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	int		i;
-	int		cpylen;
-	size_t	srclen;
-
-	srclen = ft_strlen (src);
-	if (size <= 0)
-		return (srclen);
-	i = 0;
-	if (srclen >= size - 1)
-		cpylen = size - 1;
-	else
-		cpylen = srclen;
-	while (i < (cpylen))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (srclen);
 }
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
@@ -84,29 +61,18 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	joint = ft_calloc((size), sizeof(char));
 	if (joint == NULL)
 		return (NULL);
-	ft_strlcpy(joint, s1, ft_strlen(s1) + 1);
+	ft_strlcat(joint, s1, ft_strlen(s1) + 1);
 	ft_strlcat(joint, s2, size);
 	return (joint);
 }
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	unsigned char	*p;
-
-	p = (unsigned char *)s;
-	while (n--)
-	{
-		*p = (unsigned char)c;
-		p++;
-	}
-	return (s);
-}
-
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void	*ptr;
-	size_t	full_size;
+	unsigned char	*ptr;
+	size_t			full_size;
+	int				i;
 
+	i = 0;
 	full_size = nmemb * size;
 	if (size != 0)
 	{
@@ -115,7 +81,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	}
 	ptr = malloc(size * nmemb);
 	if (ptr != NULL)
-		ft_memset(ptr, 0, (nmemb * size));
+	{
+		while (nmemb--)
+			ptr[i++] = 0;
+	}
 	return (ptr);
 }
 

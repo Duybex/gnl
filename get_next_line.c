@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/22 00:07:47 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/22 14:16:08 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*read_txt_file(int fd, char *current)
 		{
 			free (buffer);
 			free (current);
-			// printf ("test3\n");
 			return (NULL);
 		}
 		buffer[read_bytes] = '\0';
@@ -64,17 +63,14 @@ char	*get_line(char *current)
 	line = ft_calloc(i1 + 1, sizeof(char));
 	if (line == NULL)
 	{
-		// printf ("test7: %s\n", line);
 		return (NULL);
 	}
 	while (i2 <= i1 - 1)
 	{
 		line[i2] = current[i2];
-		// printf ("test6: %s\n", line);
 		i2++;
 	}
 	line[i2] = '\0';
-	// printf ("test5: %s\n", line);
 	return (line);
 }
 
@@ -110,20 +106,17 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		// printf ("test4\n");
 		return (NULL);
 	}
 	current = read_txt_file(fd, current);
 	if (current == NULL)
 	{
-		// printf ("test2\n");
 		return (NULL);
 	}
 	line = get_line(current);
 	current = del_previous_line(current);
 	return (line);
 }
-
 
 // int	main()
 // {
