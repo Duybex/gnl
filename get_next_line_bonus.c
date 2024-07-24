@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/24 15:31:40 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/24 15:51:48 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,35 +103,47 @@ char	*del_previous_line(char *current)
 
 char	*get_next_line(int fd)
 {
-	static char		*current;
+	static char		*current[_SC_OPEN_MAX];
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read (fd, 0, 0) < 0)
 		return (NULL);
-	current = read_txt_file(fd, current);
-	if (current == NULL)
+	current[fd] = read_txt_file(fd, current[fd]);
+	if (current[fd] == NULL)
 		return (NULL);
-	line = get_one_line(current);
-	current = del_previous_line(current);
+	line = get_one_line(current[fd]);
+	current[fd] = del_previous_line(current[fd]);
 	return (line);
 }
 
 // int	main()
 // {
 // 	int	fd;
+// 	int fd2;
 // 	char	*str;
+// 	char	*str2;
 // 	fd = open ("text", O_RDONLY);
-
+// 	fd2 = open ("text2", O_RDONLY);
+// 	str2 = "x";
 // 	str = "x";
-// 	while (str != NULL)
+// 	while (str != NULL && str2 != NULL)
 // 	{
+// 		if (str != NULL)
 // 		str = get_next_line(fd);
+// 		if (str2 != NULL)
+// 		str2 = get_next_line(fd2);
 // 		if (str != NULL)
 // 			printf ("%s", str);
+// 		if (str2 != NULL)
+// 			printf ("%s", str2);
+// 		if (str2 != NULL)
+// 		free (str2);
+// 		if (str != NULL)
 // 		free (str);
 // 	}
 // 	//printf ("\n");
 // 	close (fd);
+// 	close (fd2);
 // 	return (1);
 
 // }
