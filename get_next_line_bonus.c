@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/24 15:51:48 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/24 16:06:51 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	*get_next_line(int fd)
 // 	fd2 = open ("text2", O_RDONLY);
 // 	str2 = "x";
 // 	str = "x";
-// 	while (str != NULL && str2 != NULL)
+// 	while (str != NULL || str2 != NULL)
 // 	{
 // 		if (str != NULL)
 // 		str = get_next_line(fd);
