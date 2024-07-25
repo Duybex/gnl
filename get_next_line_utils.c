@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:55:40 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/24 15:31:42 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/26 00:46:10 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	joint = ft_calloc((size), sizeof(char));
 	if (joint == NULL)
 		return (NULL);
-	ft_strlcat(joint, s1, ft_strlen(s1) + 1);
+	ft_strlcat(joint, s1, size);
 	ft_strlcat(joint, s2, size);
 	return (joint);
 }
@@ -87,12 +87,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 size_t	ft_strlen(const char *str)
 {
-	int	c;
+	size_t	c;
 
 	c = 0;
-	while (str [c] != '\0')
-	{
+	while (str[c] != '\0')
 		c++;
-	}
 	return (c);
 }

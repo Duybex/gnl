@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/25 19:37:16 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/26 00:53:24 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*free_and_strjoin(char *current, char *buffer)
 {
 	char	*temp;
 
+	if (current == NULL)
+		return (NULL);
 	temp = ft_strjoin(current, buffer);
 	free (current);
 	return (temp);
@@ -30,7 +32,7 @@ char	*read_txt_file(int fd, char *current)
 		current = ft_calloc(1, 1);
 	bytes = 1;
 	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (buff == NULL || current == NULL)
+	if (!buff || !current)
 		return (NULL);
 	while (bytes > 0)
 	{
@@ -64,9 +66,7 @@ char	*get_one_line(char *current)
 		i1++;
 	line = ft_calloc(i1 + 1, sizeof(char));
 	if (line == NULL)
-	{
 		return (NULL);
-	}
 	while (i2 <= i1 - 1)
 	{
 		line[i2] = current[i2];
@@ -103,14 +103,17 @@ char	*del_previous_line(char *current)
 
 char	*get_next_line(int fd)
 {
-	static char		*current;
+	static char		*current = NULL;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	current = read_txt_file(fd, current);
 	if (current == NULL)
+	{
+		current = NULL;
 		return (NULL);
+	}
 	line = get_one_line(current);
 	current = del_previous_line(current);
 	return (line);

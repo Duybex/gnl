@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:55:40 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/24 15:31:45 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/26 00:42:06 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 size_t	ft_strlen(const char *str)
 {
-	int	c;
+	size_t	c;
 
 	c = 0;
 	while (str [c] != '\0')
