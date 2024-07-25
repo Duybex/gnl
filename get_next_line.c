@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/24 15:31:40 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:37:16 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*read_txt_file(int fd, char *current)
 	while (bytes > 0)
 	{
 		bytes = read (fd, buff, BUFFER_SIZE);
-		if (bytes < 0 || (!bytes && ft_strlen(buff) == 0 && !current[0]))
+		if (bytes < 0 || (bytes == 0 && ft_strlen(buff) == 0 && !current[0]))
 		{
 			free (buff);
 			free (current);
@@ -106,7 +106,7 @@ char	*get_next_line(int fd)
 	static char		*current;
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read (fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	current = read_txt_file(fd, current);
 	if (current == NULL)

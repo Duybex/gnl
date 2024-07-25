@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:37:01 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/24 16:06:51 by acohen           ###   ########.fr       */
+/*   Updated: 2024/07/25 19:45:00 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ char	*del_previous_line(char *current)
 
 char	*get_next_line(int fd)
 {
-	static char		*current[_SC_OPEN_MAX];
+	static char		*current[1024];
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read (fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	current[fd] = read_txt_file(fd, current[fd]);
 	if (current[fd] == NULL)
