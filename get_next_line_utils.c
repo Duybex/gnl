@@ -6,7 +6,7 @@
 /*   By: acohen <acohen@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 19:55:40 by acohen            #+#    #+#             */
-/*   Updated: 2024/07/26 00:46:10 by acohen           ###   ########.fr       */
+/*   Updated: 2024/08/05 19:01:22 by acohen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,21 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (srclen + dstlen);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*free_and_strjoin(char *current, char *buffer)
 {
 	char	*joint;
 	size_t	size;
 
-	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	size = ft_strlen(current) + ft_strlen(buffer) + 1;
 	joint = ft_calloc((size), sizeof(char));
 	if (joint == NULL)
+	{
+		free (current);
 		return (NULL);
-	ft_strlcat(joint, s1, size);
-	ft_strlcat(joint, s2, size);
+	}
+	ft_strlcat(joint, current, size);
+	ft_strlcat(joint, buffer, size);
+	free (current);
 	return (joint);
 }
 
